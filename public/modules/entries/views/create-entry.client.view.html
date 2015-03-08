@@ -1,0 +1,89 @@
+<section data-ng-controller="EntriesController" data-ng-init="init()">
+	<div class="page-header">
+		<h1>Week Entry</h1>
+	</div>
+	<div class="col-md-12">
+		<form name="entryForm" class="form-horizontal" data-ng-submit="create()" novalidate>
+			<fieldset>
+				<div class="form-group">
+
+                        <div class="col-md-2">
+                            <label class="control-label" for="project">Project</label>
+                            <div class="controls">
+                            <select class="form-control" name="project" ng-options="opt as opt.label for opt in projects" data-ng-model="project" id="project" required="">
+                            </select>
+                                </div>
+
+
+                        </div>
+                        <div class="col-md-1">
+                            <label class="control-label" for="weekNumber"></label>
+                            <div class="controls">
+                                <select class="form-control" name="weekNumber" ng-options="opt as opt.label for opt in dates" data-ng-model="weekNumber" id="weekNumber" required="">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="control-label" for="week">Week</label>
+                            <div class="controls">
+                                <input name="week" type="number" data-ng-model="week" id="week" class="form-control"  required>
+                            </div>
+                        </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-1">
+                        <label class="control-label" for="monday">Monday</label>
+                        <div class="controls">
+                            <input name="monday" type="number" data-ng-model="monday" id="monday" class="form-control"  required>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <label class="control-label" for="tuesday">Tuesday</label>
+                        <div class="controls">
+                            <input name="tuesday" type="number" data-ng-model="tuesday" id="tuesday" class="form-control" required>
+                        </div>
+
+                    </div>
+                    <div class="col-md-1">
+                        <label class="control-label" for="wednesday">Wednesday</label>
+                        <div class="controls">
+                            <input name="wednesday" type="number" data-ng-model="wednesday" id="wednesday" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <label class="control-label" for="thursday">Thursday</label>
+                        <div class="controls">
+                            <input name="thursday" type="number" data-ng-model="thursday" id="thursday" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <label class="control-label" for="friday">Friday</label>
+                        <div class="controls">
+                            <input name="friday" type="number" data-ng-model="friday" id="friday" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <label class="control-label" for="saturday">Saturday</label>
+                        <div class="controls">
+                            <input name="saturday" type="number" data-ng-model="saturday" id="saturday" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <label class="control-label" for="sunday">Sunday</label>
+                        <div class="controls">
+                            <input name="sunday" type="number" data-ng-model="sunday" id="sunday" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-default">
+				</div>
+				<div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</section>
