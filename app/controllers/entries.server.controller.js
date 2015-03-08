@@ -29,7 +29,7 @@ exports.create = function(req, res) {
 exports.listProjects = function(req, res) {
     var result = [];
 
-            result.push({label: "Proje 1", value: 1});
+            result.push({label: "Proje 1", value: "1"});
 
 
     res.contentType('application/json');

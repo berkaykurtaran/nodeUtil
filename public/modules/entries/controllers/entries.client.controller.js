@@ -12,7 +12,7 @@ angular.module('entries').controller('EntriesController', ['$scope', '$statePara
             var projects=Projects.query();
             $scope.projects = projects;
             var dates=Dates.getWeeks();
-            $scope=dates=dates;
+            $scope.dates=dates;
         }
 
         $scope.init=function(){
@@ -21,9 +21,9 @@ angular.module('entries').controller('EntriesController', ['$scope', '$statePara
         }
 
 		$scope.create = function() {
-
+debugger;
 			var entry = new Entries({
-                project:this.project,
+                project:this.project.value,
                 startDate:Dates.getStartDateOfWeek( this.weekNumber),
                 endDate:Dates.getEndDateOfWeek( this.weekNumber),
                 monday:this.monday,

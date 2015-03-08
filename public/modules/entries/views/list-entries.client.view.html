@@ -5,8 +5,11 @@
 	<div class="list-group">
 		<a data-ng-repeat="entry in entries" data-ng-href="#!/entries/{{entry._id}}" class="list-group-item">
 			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="entry.week"></span>
+				Proje
+				<span data-ng-bind="entry.project"></span>
+                Week
+                <span data-ng-bind="moment(entry.startDate).format('YYYY/MM/DD')"></span>
+                <span data-ng-bind="moment(entry.endDate).format('YYYY/MM/DD')"></span>
 				by
 				<span data-ng-bind="entry.user.displayName"></span>
 			</small>

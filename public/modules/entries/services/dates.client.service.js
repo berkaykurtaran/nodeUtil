@@ -4,31 +4,31 @@
 //WeekEntries service used for communicating with the articles REST endpoints
 angular.module('entries').service('Dates', function() {
     this.getWeeks = function() {
-        var weeks=[];
+        var dates=[];
         var weeksInYear=moment().weeksInYear();
-        var startOfYear=moment().startOf('year');
+
         for (i = 0; i < weeksInYear; i++) {
-            var currentDate=startOfYear.add(i,'w');
-            var startOfWeek=currentDate.startOf('week');
-            var endOfWeek=currentDate.endOf('week');
-            var startString="("+startOfWeek.year()+","+startOfWeek.month()+","+startOfWeek.date()+")";
-            var endString="("+endOfWeek.year()+","+endOfWeek.month()+","+endOfWeek.date()+")";
-            var label="Hafta "+i+1 +" "+ startString+"-"+endString;
-            var value=i+1;
-            weeks.push({"label":label,"value":value});
+            var startOfYear=moment().startOf('year');
+
+            var startOfWeek=startOfYear.add(i,'w').startOf('week').format("YYYY/MM/DD");
+            var endOfWeek=startOfYear.add(i,'w').endOf('week').format("YYYY/MM/DD");
+
+            var label="Hafta "+(i+1) +" "+ startOfWeek+"-"+endOfWeek;
+            var value=(i+1);
+            dates.push({"label":label,"value":value});
         }
-        return JSON.stringify(weeks);
+        return dates;
     };
 
     this.getStartDateOfWeek = function(weekNumber) {
         var startOfYear=moment().startOf('year');
         var startOfWeek=startOfYear.add(weekNumber,'w').startOf('week');
-        return startOfWeek;
+        return startOfWeek.toDate();
     };
 
     this.getEndDateOfWeek = function(weekNumber) {
         var startOfYear=moment().startOf('year');
-        var startOfWeek=startOfYear.add(weekNumber,'w').endOf('week');
-        return startOfWeek;
+        var endOfWeek=startOfYear.add(weekNumber,'w').endOf('week');
+        return endOfWeek.toDate();
     };
 });
