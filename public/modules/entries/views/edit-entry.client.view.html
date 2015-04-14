@@ -1,118 +1,85 @@
 <section data-ng-controller="EntriesController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h1>Edit Article</h1>
+		<h1>Edit Week Entry</h1>
 	</div>
-	<div class="col-md-12">
-		<form name="entryForm" class="form-horizontal" data-ng-submit="update(entryForm.$valid)" novalidate>
-			<fieldset>
-				<div class="form-group" ng-class="{ 'has-error' : submitted && entryForm.projectId.$invalid}">
-					<label class="control-label" for="projectId">Project</label>
-					<div class="controls">
-						<input name="projectId" type="text" data-ng-model="entry.projectId" id="projectId" class="form-control" placeholder="Project" required>
-					</div>
-					<div ng-show="submitted && entryForm.projectId.$invalid" class="help-block">
-						<p ng-show="entryForm.projectId.$error.required" class="text-danger">Project is required</p>
-					</div>
-				</div>
+    <div class="col-md-12">
+        <form name="entryForm" class="form-horizontal" data-ng-submit="update(entryForm.$valid)" novalidate>
+            <fieldset>
+                <div class="form-group">
 
-                <div class="form-group" ng-class="{ 'has-error' : submitted && entryForm.year.$invalid}">
-                    <label class="control-label" for="year">Year</label>
-                    <div class="controls">
-                        <input name="year" type="number" data-ng-model="entry.year" id="year" class="form-control" placeholder="Year" required>
+                    <div class="col-md-4">
+                        <label class="control-label" for="project">Project</label>
+                        <div class="controls">
+                            <select class="form-control" name="project" ng-options="opt.value as opt.label for opt in projects" data-ng-model="entry.project" id="project" required="">
+                            </select>
+                        </div>
+
+
                     </div>
-                    <div ng-show="submitted && entryForm.year.$invalid" class="help-block">
-                        <p ng-show="entryForm.year.$error.required" class="text-danger">Project is required</p>
+
+                    <div class="col-md-4">
+                        <label class="control-label" for="weekNumber">Week</label>
+                        <div class="controls">
+                            <select class="form-control" name="weekNumber" ng-options="opt.value as opt.label for opt in dates" data-ng-model="entry.week" id="weekNumber" required="">
+                            </select>
+                        </div>
                     </div>
+
+
                 </div>
 
-                <div class="form-group" ng-class="{ 'has-error' : submitted && entryForm.week.$invalid}">
-                    <label class="control-label" for="week">Week</label>
-                    <div class="controls">
-                        <input name="week" type="number" data-ng-model="entry.week" id="week" class="form-control" placeholder="Week" required>
+                <div class="form-group">
+                    <div class="col-md-1">
+                        <label class="control-label" for="monday">Monday</label>
+                        <div class="controls">
+                            <input name="monday" type="number" data-ng-model="entry.monday" id="monday" class="form-control"  required>
+                        </div>
                     </div>
-                    <div ng-show="submitted && entryForm.week.$invalid" class="help-block">
-                        <p ng-show="entryForm.week.$error.required" class="text-danger">Project is required</p>
-                    </div>
-                </div>
+                    <div class="col-md-1">
+                        <label class="control-label" for="tuesday">Tuesday</label>
+                        <div class="controls">
+                            <input name="tuesday" type="number" data-ng-model="entry.tuesday" id="tuesday" class="form-control" required>
+                        </div>
 
-                <div class="form-group" ng-class="{ 'has-error' : submitted && entryForm.monday.$invalid}">
-                    <label class="control-label" for="monday">Monday</label>
-                    <div class="controls">
-                        <input name="monday" type="number" data-ng-model="entry.monday" id="monday" class="form-control" placeholder="Monday" required>
                     </div>
-                    <div ng-show="submitted && entryForm.monday.$invalid" class="help-block">
-                        <p ng-show="entryForm.monday.$error.required" class="text-danger">Project is required</p>
+                    <div class="col-md-1">
+                        <label class="control-label" for="wednesday">Wednesday</label>
+                        <div class="controls">
+                            <input name="wednesday" type="number" data-ng-model="entry.wednesday" id="wednesday" class="form-control" required>
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-group" ng-class="{ 'has-error' : submitted && entryForm.tuesday.$invalid}">
-                    <label class="control-label" for="tuesday">Tuesday</label>
-                    <div class="controls">
-                        <input name="tuesday" type="number" data-ng-model="entry.tuesday" id="tuesday" class="form-control" placeholder="Tuesday" required>
+                    <div class="col-md-1">
+                        <label class="control-label" for="thursday">Thursday</label>
+                        <div class="controls">
+                            <input name="thursday" type="number" data-ng-model="entry.thursday" id="thursday" class="form-control" required>
+                        </div>
                     </div>
-                    <div ng-show="submitted && entryForm.tuesday.$invalid" class="help-block">
-                        <p ng-show="entryForm.tuesday.$error.required" class="text-danger">Project is required</p>
+                    <div class="col-md-1">
+                        <label class="control-label" for="friday">Friday</label>
+                        <div class="controls">
+                            <input name="friday" type="number" data-ng-model="entry.friday" id="friday" class="form-control" required>
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-group" ng-class="{ 'has-error' : submitted && entryForm.wednesday.$invalid}">
-                    <label class="control-label" for="wednesday">Wednesday</label>
-                    <div class="controls">
-                        <input name="wednesday" type="number" data-ng-model="entry.wednesday" id="wednesday" class="form-control" placeholder="Wednesday" required>
+                    <div class="col-md-1">
+                        <label class="control-label" for="saturday">Saturday</label>
+                        <div class="controls">
+                            <input name="saturday" type="number" data-ng-model="entry.saturday" id="saturday" class="form-control" required>
+                        </div>
                     </div>
-                    <div ng-show="submitted && entryForm.wednesday.$invalid" class="help-block">
-                        <p ng-show="entryForm.wednesday.$error.required" class="text-danger">Project is required</p>
-                    </div>
-                </div>
-
-                <div class="form-group" ng-class="{ 'has-error' : submitted && entryForm.thursday.$invalid}">
-                    <label class="control-label" for="thursday">thursday</label>
-                    <div class="controls">
-                        <input name="thursday" type="number" data-ng-model="entry.thursday" id="thursday" class="form-control" placeholder="thursday" required>
-                    </div>
-                    <div ng-show="submitted && entryForm.thursday.$invalid" class="help-block">
-                        <p ng-show="entryForm.thursday.$error.required" class="text-danger">Project is required</p>
+                    <div class="col-md-1">
+                        <label class="control-label" for="sunday">Sunday</label>
+                        <div class="controls">
+                            <input name="sunday" type="number" data-ng-model="entry.sunday" id="sunday" class="form-control" required>
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group" ng-class="{ 'has-error' : submitted && entryForm.friday.$invalid}">
-                    <label class="control-label" for="friday">friday</label>
-                    <div class="controls">
-                        <input name="friday" type="number" data-ng-model="entry.friday" id="friday" class="form-control" placeholder="friday" required>
-                    </div>
-                    <div ng-show="submitted && entryForm.friday.$invalid" class="help-block">
-                        <p ng-show="entryForm.friday.$error.required" class="text-danger">Project is required</p>
-                    </div>
+                <div class="form-group">
+                    <input type="submit" value="Update" class="btn btn-default">
                 </div>
-
-                <div class="form-group" ng-class="{ 'has-error' : submitted && entryForm.saturday.$invalid}">
-                    <label class="control-label" for="saturday">saturday</label>
-                    <div class="controls">
-                        <input name="saturday" type="number" data-ng-model="entry.saturday" id="saturday" class="form-control" placeholder="saturday" required>
-                    </div>
-                    <div ng-show="submitted && entryForm.saturday.$invalid" class="help-block">
-                        <p ng-show="entryForm.saturday.$error.required" class="text-danger">Project is required</p>
-                    </div>
+                <div data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
                 </div>
-
-                <div class="form-group" ng-class="{ 'has-error' : submitted && entryForm.sunday.$invalid}">
-                    <label class="control-label" for="sunday">sunday</label>
-                    <div class="controls">
-                        <input name="sunday" type="number" data-ng-model="entry.sunday" id="sunday" class="form-control" placeholder="sunday" required>
-                    </div>
-                    <div ng-show="submitted && entryForm.sunday.$invalid" class="help-block">
-                        <p ng-show="entryForm.sunday.$error.required" class="text-danger">Project is required</p>
-                    </div>
-                </div>
-                
-				
-				<div class="form-group">
-					<input type="submit" value="Update" class="btn btn-default">
-				</div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
-			</fieldset>
-		</form>
-	</div>
+            </fieldset>
+        </form>
+    </div>
 </section>

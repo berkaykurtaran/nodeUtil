@@ -26,6 +26,11 @@ var EntrySchema = new Schema({
         type: Date,
         required: 'EndDate Cannot Be Blank'
     },
+    week: {
+        type: Number,
+        default: 0,
+        trim: true
+    },
     monday: {
         type: Number,
         default: 0,

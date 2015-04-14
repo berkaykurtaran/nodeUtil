@@ -31,4 +31,5 @@ angular.module('entries').service('Dates', function() {
         var endOfWeek=startOfYear.add(weekNumber,'w').endOf('week');
         return endOfWeek.toDate();
     };
+
 });

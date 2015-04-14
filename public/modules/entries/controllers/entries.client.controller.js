@@ -21,11 +21,13 @@ angular.module('entries').controller('EntriesController', ['$scope', '$statePara
         }
 
 		$scope.create = function() {
-debugger;
+            debugger;
 			var entry = new Entries({
+
                 project:this.project.value,
                 startDate:Dates.getStartDateOfWeek( this.weekNumber),
                 endDate:Dates.getEndDateOfWeek( this.weekNumber),
+                week:this.weekNumber.value,
                 monday:this.monday,
                 tuesday:this.tuesday,
                 wednesday:this.wednesday,
@@ -71,6 +73,8 @@ debugger;
 
 		$scope.update = function() {
             var entry = $scope.entry;
+            entry.startDate=Dates.getStartDateOfWeek( $scope.weekNumber-1);
+            entry.endDate=Dates.getEndDateOfWeek( $scope.weekNumber-1);
             entry.$update(function() {
 				$location.path('entries/' + entry._id);
 			}, function(errorResponse) {
@@ -86,9 +90,16 @@ debugger;
 
 		$scope.findOne = function() {
             prepare();
-			$scope.entry = Entries.get({
-				entryId: $stateParams.entryId
-			});
+            debugger;
+            Entries.get({
+                entryId: $stateParams.entryId
+            }).$promise.then(function(en) {
+                    debugger;
+                    $scope.entry = en;
+
+                });
+
 		};
+
 	}
 ]);
