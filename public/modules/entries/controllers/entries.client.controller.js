@@ -37,18 +37,8 @@ angular.module('entries').controller('EntriesController', ['$scope', '$statePara
                 sunday:this.sunday
 
 			});
-            entry.$save(function(response) {
-				$location.path('entries/' + response._id);
-
-				$scope.projectId = '';
-                $scope.weekNumber = 1;
-                $scope.monday = 2;
-                $scope.tuesday = 3;
-                $scope.wednesday = 4;
-                $scope.thursday = 5;
-                $scope.friday = 6;
-                $scope.saturday = 7;
-                $scope.sunday = 8;
+            entry.$save(function() {
+				$location.path('entries');
 
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
@@ -76,7 +66,7 @@ angular.module('entries').controller('EntriesController', ['$scope', '$statePara
             entry.startDate=Dates.getStartDateOfWeek( $scope.weekNumber-1);
             entry.endDate=Dates.getEndDateOfWeek( $scope.weekNumber-1);
             entry.$update(function() {
-				$location.path('entries/' + entry._id);
+				$location.path('entries');
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -90,13 +80,10 @@ angular.module('entries').controller('EntriesController', ['$scope', '$statePara
 
 		$scope.findOne = function() {
             prepare();
-            debugger;
             Entries.get({
                 entryId: $stateParams.entryId
             }).$promise.then(function(en) {
-                    debugger;
                     $scope.entry = en;
-
                 });
 
 		};
