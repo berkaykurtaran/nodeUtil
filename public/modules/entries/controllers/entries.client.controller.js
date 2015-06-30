@@ -3,7 +3,7 @@
 angular.module('entries').controller('EntriesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Entries','Projects','Dates',
 	function($scope, $stateParams, $location, Authentication, Entries,Projects,Dates) {
 		$scope.authentication = Authentication;
-        if(Authentication.user=='')
+        if(Authentication.user==='')
         {
             $location.path('signin');
         }
@@ -16,12 +16,10 @@ angular.module('entries').controller('EntriesController', ['$scope', '$statePara
         }
 
         $scope.init=function(){
-
             prepare();
         }
 
 		$scope.create = function() {
-            debugger;
 			var entry = new Entries({
 
                 project:this.project.value,

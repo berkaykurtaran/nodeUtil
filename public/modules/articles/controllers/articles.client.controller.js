@@ -3,13 +3,12 @@
 angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
 	function($scope, $stateParams, $location, Authentication, Articles) {
 		$scope.authentication = Authentication;
-        if(Authentication.user=='')
+        if(Authentication.user==='')
         {
             $location.path('signin');
         }
 
 		$scope.create = function() {
-            debugger;
 			var article = new Articles({
 				title: this.title,
 				content: this.content

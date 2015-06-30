@@ -6,10 +6,16 @@
 var mongoose = require('mongoose'),
     errorHandler = require('./errors.server.controller'),
     Entry = mongoose.model('Entry'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    Client = require('node-rest-client').Client,
+    NodeCache = require( "node-cache" ),
+    parseString = require('xml2js').parseString;
+    var cache = new NodeCache({ stdTTL: 60*60*12, checkperiod: 60*60 });
+
+
 
 /**
- * Create a article
+ * Create an entry
  */
 exports.create = function(req, res) {
     var entry = new Entry(req.body);
@@ -27,16 +33,84 @@ exports.create = function(req, res) {
 };
 
 exports.listProjects = function(req, res) {
-    var result = [];
+    var cachedProjects = cache.get( "projects" );
+    if(cachedProjects==undefined)
+    {
+        getProjects(function(projects){
+            cache.set( "projects", projects, 10000 );
+            res.contentType('application/json');
+            res.send(JSON.stringify(projects));
+        });
+    }else
+    {
+        res.contentType('application/json');
+        res.send(JSON.stringify(cachedProjects));
+    }
 
-            result.push({label: "Proje 1", value: "1"});
-
-
-    res.contentType('application/json');
-    res.send(JSON.stringify(result));
 
 
 };
+
+function getProjects(done){
+    var client = new Client();
+    var projects=[];
+    client.post("http://destek.volt.com.tr/youtrack/rest/user/login?login=BerkayK&password=Brk2014!", function(data,response) {
+
+        var jsessionId;
+        var scPrincipal;
+
+        // parsed response body as js object
+        //console.log(data);
+        // raw response
+        //console.log(response);
+
+        /*  var cookies = _.map(req.cookies, function(val, key) {
+         return key + "=" + encodeURIComponent(val);
+         }).join("; ");*/
+
+        var args={
+            headers:{"Cookie": "JSESSIONID="+response.rawHeaders[7].split("=")[1].split(";")[0]+"; jetbrains.charisma.main.security.PRINCIPAL="+response.rawHeaders[9].split("=")[1].split(";")[0]}
+        }
+
+
+
+
+        client.get("http://destek.volt.com.tr/youtrack/rest/project/all?verbose=false",args, function(data, response){
+            // parsed response body as js object
+            //console.log(data);
+            // raw response
+            console.log(response);
+
+
+
+          /*  var XML = et.XML;
+            var ElementTree = et.ElementTree;
+            var element = et.Element;
+            var subElement = et.SubElement;
+
+            var etree=et.parse(data);
+            var projectNodes=etree.findall('./projects/project');*/
+
+           /* parseString(data.projects.project, function (err, result) {
+                console.log(result);
+                projects=result;
+
+            });*/
+
+
+            for (var i=0;i<data.projects.project.length;i++)
+            {
+                var node=data.projects.project[i];
+                projects.push({label: node.$.name, value: node.$.shortName});
+            }
+            done(projects);
+
+
+        });
+
+    });
+
+}
 
 /**
  * Show the current article
@@ -50,9 +124,7 @@ exports.read = function(req, res) {
  */
 exports.update = function(req, res) {
     var entry = req.entry;
-
     entry = _.extend(entry, req.body);
-
     entry.save(function(err) {
         if (err) {
             return res.status(400).send({
@@ -85,7 +157,7 @@ exports.delete = function(req, res) {
  * List of Articles
  */
 exports.list = function(req, res) {
-    Entry.find().sort('-created').populate('user', 'displayName').exec(function(err, entries) {
+    Entry.find({user:req.user.id}).sort('-created').populate('user', 'displayName').exec(function(err, entries) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)

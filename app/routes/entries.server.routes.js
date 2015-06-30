@@ -9,14 +9,14 @@ var users = require('../../app/controllers/users.server.controller'),
 module.exports = function(app) {
 	// Article Routes
 	app.route('/entries')
-		.get(entries.list)
+		.get(users.requiresLogin,entries.list)
 		.post(users.requiresLogin, entries.create);
 
     app.route('/projects')
         .get(users.requiresLogin,entries.listProjects);
 
 	app.route('/entries/:entryId')
-		.get(entries.read)
+		.get(users.requiresLogin,entries.read)
 		.put(users.requiresLogin, entries.hasAuthorization, entries.update)
 		.delete(users.requiresLogin, entries.hasAuthorization, entries.delete);
 
