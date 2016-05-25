@@ -54,7 +54,7 @@ exports.listProjects = function(req, res) {
 function getProjects(done){
     var client = new Client();
     var projects=[];
-    client.post("http://destek.volt.com.tr/youtrack/rest/user/login?login=BerkayK&password=Brk2014!", function(data,response) {
+    client.post("http://xdomain/youtrack/rest/user/login?login=x&password=x", function(data,response) {
 
         var jsessionId;
         var scPrincipal;
@@ -75,7 +75,7 @@ function getProjects(done){
 
 
 
-        client.get("http://destek.volt.com.tr/youtrack/rest/project/all?verbose=false",args, function(data, response){
+        client.get("http://xdomain/youtrack/rest/project/all?verbose=false",args, function(data, response){
             // parsed response body as js object
             //console.log(data);
             // raw response
